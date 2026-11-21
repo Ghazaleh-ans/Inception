@@ -1,0 +1,9 @@
+*.pdf
+AGENTS.md
+.env
+secrets/
+docs/
+CLAUDE.md
+HISTORY.md
+.env
+secrets/
