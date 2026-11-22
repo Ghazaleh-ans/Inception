@@ -19,6 +19,7 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
   wordpress:
     build: requirements/wordpress
     image: wordpress:inception
@@ -34,6 +35,23 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: requirements/nginx
+      args:
+        DOMAIN_NAME: ${DOMAIN_NAME}
+    image: nginx:inception
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    depends_on:
+      - wordpress
     restart: unless-stopped
 
 volumes:
